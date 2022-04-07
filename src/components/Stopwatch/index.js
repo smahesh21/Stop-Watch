@@ -6,27 +6,26 @@ class StopWatch extends Component {
   state = {isTimerRunning: false, timerInSeconds: 0}
 
   componentWillUnmount() {
-    this.clearTimer(this.intervalId)
-  }
-
-  onClickReset = () => {
-    this.clearTimer(this.intervalId)
-    this.setState({isTimerRunning: false, timerInSeconds: 0})
+    clearInterval(this.intervalId)
   }
 
   updateTimer = () => {
     this.setState(prevState => ({timerInSeconds: prevState.timerInSeconds + 1}))
   }
 
-  clearTimer = () => clearInterval(this.intervalId)
-
-  onClickStart = () => {
-    this.intervalId = setInterval(this.updateTimer, 1000)
+  onClickReset = () => {
+    clearInterval(this.intervalId)
+    this.setState({isTimerRunning: false, timerInSeconds: 0})
   }
 
   onClickStop = () => {
-    this.clearTimer(this.intervalId)
+    clearInterval(this.intervalId)
     this.setState({isTimerRunning: false})
+  }
+
+  onClickStart = () => {
+    this.intervalId = setInterval(this.updateTimer, 1000)
+    this.setState({isTimerRunning: true})
   }
 
   displaySeconds = () => {
@@ -64,7 +63,7 @@ class StopWatch extends Component {
             />
             <h1 className="timer-text">Timer</h1>
           </div>
-          <p className="timer">{time}</p>
+          <h1 className="timer">{time}</h1>
           <div className="buttons-section">
             <button
               type="button"
